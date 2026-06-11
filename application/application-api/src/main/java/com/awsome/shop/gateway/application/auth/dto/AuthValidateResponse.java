@@ -18,5 +18,10 @@ public class AuthValidateResponse {
 
     private String operatorId;
 
+    /**
+     * 角色: EMPLOYEE / ADMIN（验证通过时由 Auth 服务回传，供管理员路由角色鉴权）
+     */
+    private String role;
+
     private String message;
 }

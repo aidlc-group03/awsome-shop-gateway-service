@@ -119,6 +119,37 @@ spring:
               metadata:
                 auth-required: true
 
+            # ==================== Admin Routes (auth required + ADMIN role) ====================
+            # 认证由 AuthenticationGatewayFilter 完成并解析 role；
+            # 角色校验（role=ADMIN）由 RoleAuthorizationFilter 对 /api/v1/admin/** 统一执行。
+            - id: auth-admin
+              uri: ${gateway.services.auth}
+              predicates:
+                - Path=/api/v1/admin/user/**
+              metadata:
+                auth-required: true
+
+            - id: product-admin
+              uri: ${gateway.services.product}
+              predicates:
+                - Path=/api/v1/admin/product/**,/api/v1/admin/category/**
+              metadata:
+                auth-required: true
+
+            - id: points-admin
+              uri: ${gateway.services.point}
+              predicates:
+                - Path=/api/v1/admin/points/**
+              metadata:
+                auth-required: true
+
+            - id: order-admin
+              uri: ${gateway.services.order}
+              predicates:
+                - Path=/api/v1/admin/exchange/**
+              metadata:
+                auth-required: true
+
             # ==================== Service-Prefix Routes (Swagger Try-it-out) ====================
             - id: auth-proxy
               uri: ${gateway.services.auth}

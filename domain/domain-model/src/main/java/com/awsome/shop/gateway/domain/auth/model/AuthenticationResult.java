@@ -18,12 +18,25 @@ public class AuthenticationResult {
 
     private String operatorId;
 
+    /**
+     * 角色: EMPLOYEE / ADMIN（认证通过时）
+     */
+    private String role;
+
     private String message;
 
     public static AuthenticationResult success(String operatorId) {
         return AuthenticationResult.builder()
                 .authenticated(true)
                 .operatorId(operatorId)
+                .build();
+    }
+
+    public static AuthenticationResult success(String operatorId, String role) {
+        return AuthenticationResult.builder()
+                .authenticated(true)
+                .operatorId(operatorId)
+                .role(role)
                 .build();
     }
 

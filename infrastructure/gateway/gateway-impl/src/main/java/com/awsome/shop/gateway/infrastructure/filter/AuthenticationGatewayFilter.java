@@ -67,15 +67,22 @@ public class AuthenticationGatewayFilter implements GlobalFilter, Ordered {
                                 GatewayErrorCode.AUTH_TOKEN_INVALID, result.getMessage()));
                     }
 
-                    log.debug("[{}] Authenticated operatorId: {}", requestId, result.getOperatorId());
+                    log.debug("[{}] Authenticated operatorId: {}, role: {}",
+                            requestId, result.getOperatorId(), result.getRole());
 
-                    // Store operatorId for downstream filters
+                    // Store operatorId/role for downstream filters
                     exchange.getAttributes().put(RouteConstants.ATTR_OPERATOR_ID, result.getOperatorId());
+                    if (result.getRole() != null) {
+                        exchange.getAttributes().put(RouteConstants.ATTR_OPERATOR_ROLE, result.getRole());
+                    }
 
-                    // Add operatorId header to request
-                    ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                            .header(RouteConstants.HEADER_OPERATOR_ID, result.getOperatorId())
-                            .build();
+                    // Add operatorId/role headers to request
+                    ServerHttpRequest.Builder requestBuilder = exchange.getRequest().mutate()
+                            .header(RouteConstants.HEADER_OPERATOR_ID, result.getOperatorId());
+                    if (result.getRole() != null) {
+                        requestBuilder.header(RouteConstants.HEADER_OPERATOR_ROLE, result.getRole());
+                    }
+                    ServerHttpRequest mutatedRequest = requestBuilder.build();
 
                     return chain.filter(exchange.mutate().request(mutatedRequest).build());
                 });

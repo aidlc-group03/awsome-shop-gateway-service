@@ -12,6 +12,7 @@ public final class RouteConstants {
 
     public static final String HEADER_REQUEST_ID = "X-Request-Id";
     public static final String HEADER_OPERATOR_ID = "X-Operator-Id";
+    public static final String HEADER_OPERATOR_ROLE = "X-Operator-Role";
     public static final String HEADER_AUTHORIZATION = "Authorization";
 
     // ==================== Route Metadata Keys ====================
@@ -22,10 +23,16 @@ public final class RouteConstants {
 
     public static final String PATH_PREFIX_PUBLIC = "/api/v1/public/";
     public static final String PATH_PREFIX_DOCS = "/v3/api-docs/";
+    public static final String PATH_PREFIX_ADMIN = "/api/v1/admin/";
+
+    // ==================== Role Values ====================
+
+    public static final String ROLE_ADMIN = "ADMIN";
 
     // ==================== Gateway Attributes ====================
 
     public static final String ATTR_REQUEST_ID = "requestId";
     public static final String ATTR_OPERATOR_ID = "operatorId";
+    public static final String ATTR_OPERATOR_ROLE = "operatorRole";
     public static final String ATTR_REQUEST_START_TIME = "requestStartTime";
 }
